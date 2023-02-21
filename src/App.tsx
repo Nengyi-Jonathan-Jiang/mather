@@ -1,26 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useRef, useState} from 'react';
+import './style.css';
+import {MathRenderer} from "./components/math/math";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [input, setInput] = useState("3.14159 a \\times 180 \\plus \\frac { 2 \\plus \\frac {-2 \\alpha} \\zeta + \\beta } { r \\theta \\plus \\frac 2 3 \\pi }");
+    const ref = useRef<HTMLTextAreaElement>();
+    return <>
+        <textarea value={input} ref={ref as any} onInput={e => setInput(ref.current?.value as string)}/>
+        <MathRenderer code={input}/>
+    </>;
 }
 
 export default App;

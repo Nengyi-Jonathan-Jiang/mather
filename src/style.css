@@ -1,0 +1,94 @@
+@font-face {
+  font-family: 'Latin Modern Math';
+  src: url(fonts/latinmodern-math.otf) format('opentype');
+}
+@font-face {
+  font-family: 'STIX Two Math';
+  src: url(fonts/STIXTwoMath-Regular.otf) format('opentype');
+}
+
+body { margin: 0; padding: 0 }
+
+.math {
+  font-family: 'Latin Modern Math', 'STIX Two Math', "Times New Roman", sans-serif;
+
+  font-size: large;
+
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  border: .2em solid #DDD;
+
+  line-height: 1.3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+textarea {
+  width: 100%;
+  height: 10em;
+  resize: vertical;
+  outline: none;
+  border: none;
+  font-family: 'Arial', sans-serif;
+}
+
+.math * {
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.math span.text {
+  font-family: 'Times New Roman', serif;
+  margin: 0 .05em;
+}
+
+.math span.number {
+  margin: 0 .05em;
+}
+
+.math var {
+  margin-right: .1em;
+}
+
+.math var[data-noitalic] {
+  font-style: normal;
+}
+
+.math span.operator {
+  margin: 0 .2em;
+}
+
+.math span.cursor::after {
+  content: "";
+  border-left: 1px solid black;
+}
+
+.math span.fraction {
+  font-size: 90%;
+  text-align: center;
+  vertical-align: -0.65em;
+  padding: 0 0.2em;
+}
+
+.math span.fraction span.numerator {
+  padding: 0 .1em;
+  display: block;
+}
+
+.math span.fraction span.denominator {
+  border-top: 1px solid;
+  float: right;
+  width: 100%;
+  padding: 0.05em .1em;
+  display: block;
+}
+
+.math div.grouping::before {
+  content: attr(data-left);
+}
+.math div.grouping::after {
+  content: attr(data-right);
+}
