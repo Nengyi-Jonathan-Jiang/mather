@@ -110,10 +110,18 @@ textarea {
 }
 
 .math div.grouping .group-content {
+    min-width: .8em;
     min-height: 1em;
+    padding: 0 .4em;
 }
 
 .math div.grouping .group-symbol {
     --v-scale: 1;
-    transform: scaleY(var(--v-scale));
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%)  scaleY(var(--v-scale));
+}
+
+.right.group-symbol {
+    right: 0;
 }
