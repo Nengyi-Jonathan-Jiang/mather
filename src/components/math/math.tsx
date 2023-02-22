@@ -59,17 +59,14 @@ function Grouping({left, right, children} : {left: string, right:string, childre
     useEffect(() => {
         const H = cRef.current?.clientHeight ?? 1;
         for(const ref of [lRef, rRef]) {
-            const h = ref.current?.clientHeight ?? 1;
-            const ratio = H / h;
-            ref.current?.style?.setProperty('--v-scale', `${ratio}`);
             ref.current?.style?.setProperty('--p-height', `${H}px`);
         }
     });
 
     return <div className="grouping">
-        <span className='left group-symbol' ref={lRef as any}>{left}</span>
+        <svg preserveAspectRatio="none" viewBox="3 0 106 186" ref={lRef as any} className="left group-symbol"><path d="M85 0 A61 101 0 0 0 85 186 L75 186 A75 101 0 0 1 75 0"></path></svg>
         <span className="group-content" ref={cRef as any}>{children}</span>
-        <span className='right group-symbol' ref={rRef as any}>{right}</span>
+        <svg preserveAspectRatio="none" viewBox="3 0 106 186" ref={lRef as any} className="right group-symbol"><path d="M85 0 A61 101 0 0 0 85 186 L75 186 A75 101 0 0 1 75 0"></path></svg>
     </div>
 }
 
