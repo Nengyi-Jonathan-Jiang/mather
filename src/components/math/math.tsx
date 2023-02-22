@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement, useEffect, useRef} from "react";
 
 type s_digit =  '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'|'.';
 type s_number = string;
@@ -45,14 +45,32 @@ function NumberEl(
 
 function Fraction({numerator, denominator}:{numerator: ReactElement[], denominator: ReactElement[]}) {
     return <span className="fraction">
-        <span className="numerator">{numerator}</span>
-        <span className="denominator">{denominator}</span>
+        <span className="numerator expr">{numerator}</span>
+        <span className="denominator expr">{denominator}</span>
         <span>&#x200B;</span>
     </span>
 }
 
 function Grouping({left, right, children} : {left: string, right:string, children: ReactElement[]}){
-    return <div className="grouping" data-left={left} data-right={right}>{children}</div>
+    const lRef = useRef<HTMLSpanElement>();
+    const rRef = useRef<HTMLSpanElement>();
+    const cRef = useRef<HTMLSpanElement>();
+
+    useEffect(() => {
+        const H = cRef.current?.clientHeight ?? 1;
+        for(const ref of [lRef, rRef]) {
+            const h = ref.current?.clientHeight ?? 1;
+            const ratio = H / h;
+            ref.current?.style?.setProperty('--v-scale', `${ratio}`);
+            ref.current?.style?.setProperty('--p-height', `${H}px`);
+        }
+    });
+
+    return <div className="grouping">
+        <span className='left group-symbol' ref={lRef as any}>{left}</span>
+        <span className="group-content" ref={cRef as any}>{children}</span>
+        <span className='right group-symbol' ref={rRef as any}>{right}</span>
+    </div>
 }
 
 type Sym = () => ReactElement;
@@ -135,7 +153,7 @@ COMMANDS.addLetter('omega', 'ω')
 COMMANDS.addSymbol('times', () => <BinOp text='·'/>)
 COMMANDS.addSymbol('divide', () => <BinOp text='÷'/>)
 COMMANDS.addSymbol('plus', () => <BinOp text='+'/>)
-COMMANDS.addSymbol('minus', () => <BinOp text='-'/>)
+COMMANDS.addSymbol('minus', () => <BinOp text='−'/>)
 COMMANDS.addSymbol('pm', () => <BinOp text='±'/>)
 COMMANDS.addSymbol('mp', () => <BinOp text='∓'/>)
 COMMANDS.addSymbol('cross', () => <BinOp text='⨯'/>)
@@ -192,7 +210,7 @@ class MathParser {
             let dPoint = false;
             let n = '';
             if(it.next === '-') {
-                n += '–';
+                n += '⁻';
                 it.advance();
             }
             while(!it.done && (it.next.match(/\d/) || (it.next === '.' && !dPoint))) {
@@ -223,7 +241,7 @@ class MathParser {
                 let p2 = this._parseSingle(it);
                 return COMMANDS.applyBinaryCommand(s, [p1], [p2]);
             }
-            else return <></>   // (-_-) sad
+            else return <Text>{s}</Text>   // (-_-) sad
         }
         // If var to parse
         if(it.next.match(/[a-zA-Z]+/)) {
