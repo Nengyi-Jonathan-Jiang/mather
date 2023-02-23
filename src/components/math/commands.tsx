@@ -1,5 +1,5 @@
 import React, {ReactElement} from "react";
-import {BinOp, Fraction, Grouping, MinusSign, Var} from "./components";
+import {BinOp, Fraction, Grouping, MinusSign, Root, Var} from "./components";
 import {cast} from "../../util/util";
 
 type Sym = () => ReactElement;
@@ -12,6 +12,12 @@ export const COMMANDS = new class {
     private binaryCommands: Map<string, BinaryCommand> = new Map();
     addSymbol(name: string, func: Sym){
         this.symbols.set(name, func);
+    }
+    addBuiltin(name: string){
+        this.symbols.set(name, () => <span className='builtin'>{name}</span>)
+    }
+    addOperator(name: string){
+        this.symbols.set(name, () => <BinOp text={name}/>)
     }
     addLetter(name: string, sym: string, italic=true){
         this.symbols.set(name, () => <Var letter={sym} italic={italic}/>)
@@ -88,7 +94,9 @@ COMMANDS.addSymbol('plus', () => <BinOp text='+'/>)
 COMMANDS.addSymbol('minus', () => <MinusSign/>)
 COMMANDS.addSymbol('pm', () => <BinOp text='±'/>)
 COMMANDS.addSymbol('mp', () => <BinOp text='∓'/>)
-COMMANDS.addSymbol('cross', () => <BinOp text='⨯'/>)
+COMMANDS.addSymbol('cross', () => <BinOp text='×'/>)
+
+COMMANDS.addLetter('fact', '!', false);
 COMMANDS.addSymbol('etc', () => <BinOp text='...'/>)
 
 COMMANDS.addSymbol('lt', () => <BinOp text='<'/>)
@@ -99,25 +107,40 @@ COMMANDS.addSymbol('ge', () => <BinOp text='≥'/>)
 COMMANDS.addSymbol('ne', () => <BinOp text='≠'/>)
 COMMANDS.addSymbol('ae', () => <BinOp text='≈'/>)
 
-COMMANDS.addUnaryCommand('sup', a => <sup>{a}</sup>)
-COMMANDS.addUnaryCommand('sub', a=><sub>{a}</sub>)
+COMMANDS.addBuiltin('sin');
+COMMANDS.addBuiltin('cos');
+COMMANDS.addBuiltin('tan');
+COMMANDS.addBuiltin('sec');
+COMMANDS.addBuiltin('csc');
+COMMANDS.addBuiltin('cot')
+COMMANDS.addBuiltin('asin');
+COMMANDS.addBuiltin('acos');
+COMMANDS.addBuiltin('atan');
+COMMANDS.addBuiltin('sinh');
+COMMANDS.addBuiltin('cosh');
+COMMANDS.addBuiltin('tanh');
+COMMANDS.addBuiltin('asinh');
+COMMANDS.addBuiltin('acosh');
+COMMANDS.addBuiltin('atanh');
 
-COMMANDS.addUnaryCommand('arr', a => <Grouping svg={(ref, side) =>
-    <svg preserveAspectRatio="none" viewBox="0 0 11 24" className={`${side} group-symbol`} ref={ref}>
+COMMANDS.addOperator('mod');
+
+COMMANDS.addUnaryCommand('sup', a => <span className='sup'><sup>{a}</sup></span>)
+COMMANDS.addUnaryCommand('sub', a => <span className='sub'><sub>{a}</sub></span>)
+
+COMMANDS.addUnaryCommand('arr', a => <Grouping svg={() =>
+    <svg preserveAspectRatio="none" viewBox="0 0 11 24">
         <path d="M8 0 L3 0 L3 24 L8 24 L8 23 L4 23 L4 1 L8 1"></path>
     </svg>
 }>{a}</Grouping>)
-COMMANDS.addUnaryCommand('paren', a => <Grouping svg={(ref, side) =>
-    <svg preserveAspectRatio="none" viewBox = "3 0 106 186" className={`${side} group-symbol`} ref={ref}>
+COMMANDS.addUnaryCommand('paren', a => <Grouping svg={() =>
+    <svg preserveAspectRatio="none" viewBox = "3 0 106 186">
         <path d = "M85 0 A61 101 0 0 0 85 186 L75 186 A75 101 0 0 1 75 0" ></path>
     </svg>
 }>{a}</Grouping>)
 
 COMMANDS.addUnaryCommand('int', a => <div><big className="int">∫</big>{a}</div>)
 
-COMMANDS.addBinaryCommand('frac', (a, b) => <Fraction numerator={a} denominator={b}/>)
+COMMANDS.addUnaryCommand('sqrt', a => <Root>{a}</Root>)
 
-/*
- * Example code:
- * 3.14159 a \times 180 + \frac { r \theta } { 2 \times x}
- */
+COMMANDS.addBinaryCommand('frac', (a, b) => <Fraction numerator={a} denominator={b}/>)

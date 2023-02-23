@@ -14,6 +14,7 @@ class MathParser {
             .replaceAll('+', '\\plus ')
             .replaceAll('-', '\\minus')
             .replaceAll('*', '\\times ')
+            .replaceAll('/', '\\divide')
             .replaceAll('>=', '\\ge ')
             .replaceAll('<=', '\\le ')
             .replaceAll('>', '\\gt ')
@@ -21,6 +22,10 @@ class MathParser {
             .replaceAll('!=', '\\ne ')
             .replaceAll('~=', '\\ae')
             .replaceAll('=', '\\eq ')
+            .replaceAll('!', '\\fact')
+            .replaceAll('[', '\\arr{')
+            .replaceAll('(', '\\paren{')
+            .replaceAll(/[[)]/g, '}');
         let i = 0;
         return this._parseMany({
             get next () {return i >= code.length ? cast<string>(null) : code[i]},

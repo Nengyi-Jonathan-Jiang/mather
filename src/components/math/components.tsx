@@ -5,7 +5,7 @@ export function Text({children: text} : {children:string}){
 }
 
 function Digit({digit} : {digit: string}){
-    return <span className="digit textual value">{digit}</span>
+    return <span className="digit">{digit}</span>
 }
 
 export function Var({letter, italic=true} : {letter: string, italic?: boolean}){
@@ -26,7 +26,7 @@ export function MinusSign(){
 
 export function NumberEl({value} : {value : string}){
     let children = value.split('').map((s, i) => <Digit digit={s} key={i}/>)
-    return <span className="number value">{children}</span>
+    return <span className="number textual value">{children}</span>
 }
 
 export function Fraction({numerator, denominator}:{numerator: ReactElement[], denominator: ReactElement[]}) {
@@ -37,7 +37,7 @@ export function Fraction({numerator, denominator}:{numerator: ReactElement[], de
     </span>
 }
 
-export function Grouping({svg, children} : {svg: (ref:MutableRefObject<SVGSVGElement>,side:string)=>ReactElement, children: ReactElement[]}){
+export function Grouping({svg, children} : {svg: ()=>ReactElement, children: ReactElement[]}){
     const lRef = useRef<HTMLElement>();
     const rRef = useRef<HTMLElement>();
     const gRef = useRef<HTMLElement>();
@@ -50,8 +50,27 @@ export function Grouping({svg, children} : {svg: (ref:MutableRefObject<SVGSVGEle
     });
 
     return <div className="grouping value">
-        {svg(lRef as any, 'left')}
+        <span className='group-symbol prefix' ref={lRef as any}>{svg()}</span>
         <span className="group-content" ref={gRef as any}>{children}</span>
-        {svg(rRef as any, 'right')}
+        <span className='group-symbol suffix' ref={rRef as any}>{svg()}</span>
+    </div>
+}
+
+export function Root({children} : {children: ReactElement[]}){
+    const sRef = useRef<HTMLElement>();
+    const pRef = useRef<HTMLElement>();
+
+    useEffect(() => {
+        const H = pRef.current?.getBoundingClientRect()?.height ?? 1;
+        sRef.current?.style?.setProperty('--p-height', `${H}px`);
+    });
+
+    return <div className="sqrt value">
+        <span className='sqrt prefix' ref={sRef as any}>
+            <svg preserveAspectRatio="none" viewBox="0 0 32 54" className="sqrt">
+                <path d="M0 33 L7 27 L12.5 47 L13 47 L30 0 L32 0 L13 54 L11 54 L4.5 31 L0 33"></path>
+            </svg>
+        </span>
+        <span className="sqrt-content expr" ref={pRef as any}>{children}</span>
     </div>
 }

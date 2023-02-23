@@ -23,7 +23,7 @@ body {
     overflow: hidden;
     padding: .2em;
 
-    line-height: 1.3;
+    line-height: 1;
 }
 
 #math-output {
@@ -51,7 +51,13 @@ textarea {
 }
 
 .math sup, .math sub {
-    font-size: 70%;
+    font-size: 80%;
+}
+.math sup {
+    vertical-align: text-bottom;
+}
+.math span.sup{
+    vertical-align: .3em;
 }
 
 .math span.text {
@@ -59,11 +65,6 @@ textarea {
 }
 
 .math span.number {}
-
-.math *.textual {
-    line-height: 1;
-    margin: 0 .05em 0 .05em
-}
 
 .math .expr:empty::before {
     content: '';
@@ -79,6 +80,12 @@ textarea {
     content: ' ';
     display: inline-block;
     width: .6em;
+}
+
+.math .group-content:empty::after {
+    content: ' ';
+    display: inline-block;
+    width: .1em;
 }
 
 .math big {
@@ -105,6 +112,10 @@ textarea {
 
 .math span.comma {
     margin-right: .2em;
+}
+
+.math span.builtin:not(:first-child) {
+    margin-left: .15em;
 }
 
 .math span.operator {
@@ -157,25 +168,37 @@ textarea {
     display: block;
 }
 
-.math div.grouping .group-content {
-    min-width: .4em;
-}
-
-.math div.grouping .group-content:empty::before {
-    content: ' ';
-    display: inline-block;
-}
-
 .math .grouping > .group-symbol {
     --p-height: 0;
-    min-height: var(--p-height);
-    vertical-align: bottom;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    height: var(--p-height);
     width: .4em;
+    vertical-align: bottom;
 }
 
 .math .right.group-symbol {
     transform: scaleX(-1);
+}
+
+.math .sqrt.prefix {
+    --p-height: 0;
+    height: var(--p-height);
+    width: 0.95em;
+    vertical-align: bottom;
+}
+
+.math svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.math .suffix {
+    transform: scaleX(-1);
+}
+
+.math .sqrt>.sqrt-content {
+    border-top: 1px solid black;
+    padding: 1px 1px 0 1px;
+    margin-left: -.06em;
 }
