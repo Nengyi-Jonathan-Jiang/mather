@@ -14,7 +14,7 @@ class MathParser {
             .replaceAll('+', '\\plus ')
             .replaceAll('-', '\\minus')
             .replaceAll('*', '\\times ')
-            .replaceAll('/', '\\divide')
+            .replaceAll('/', '\\divide ')
             .replaceAll('>=', '\\ge ')
             .replaceAll('<=', '\\le ')
             .replaceAll('>', '\\gt ')
@@ -22,7 +22,7 @@ class MathParser {
             .replaceAll('!=', '\\ne ')
             .replaceAll('~=', '\\ae')
             .replaceAll('=', '\\eq ')
-            .replaceAll('!', '\\fact')
+            .replaceAll('!', '\\fact ')
             .replaceAll('[', '\\arr{')
             .replaceAll('(', '\\paren{')
             .replaceAll(/[[)]/g, '}');

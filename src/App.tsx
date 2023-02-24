@@ -8,7 +8,7 @@ function App() {
     return <>
         <textarea value={input} ref={ref as any} onInput={e => setInput(ref.current?.value as string)}/>
         <div id="math-output">{
-            input.split(/(\s*\n\s*){2,}/g).map(entry => <MathRenderer code={entry}/>)
+            input.split(/\s*\n\s*/g).map(entry => <MathRenderer code={entry}/>)
         }</div>
     </>;
 }
