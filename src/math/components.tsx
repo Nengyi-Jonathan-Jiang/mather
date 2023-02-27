@@ -8,20 +8,15 @@ function Digit({digit} : {digit: string}){
     return <span className="digit">{digit}</span>
 }
 
-export function Var({letter, italic=true} : {letter: string, italic?: boolean}){
-    return italic
-        ? letter === 'f'
-            ? <var className='letter-f textual value'>f</var>
-            : <var className='textual value'>{letter}</var>
-        : <var data-noitalic='' className='textual value'>{letter}</var>
+export function Var({letter, italic=true, useDefaultFont=false} : {letter: string, italic?: boolean, useDefaultFont?: boolean}){
+    const c_letter_f = letter === 'f' ? 'letter-f ' : '';
+    const c_italic = italic ? '' : 'no-italic ';
+    const c_useDefaultFont = useDefaultFont ? 'default-font ' : '';
+    return <var className={`${c_letter_f}${c_italic}${c_useDefaultFont}textual value`}>{letter}</var>
 }
 
 export function BinOp({text} : {text: string}){
     return <span className="operator infix">{text}</span>
-}
-
-export function MinusSign(){
-    return <span className="minus-sign operator infix"></span>
 }
 
 export function NumberEl({value} : {value : string}){

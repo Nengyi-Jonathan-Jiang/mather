@@ -19,8 +19,8 @@ export const COMMANDS = new class {
     addOperator(name: string, value?:string){
         this.symbols.set(name, () => <BinOp text={value ?? name}/>)
     }
-    addLetter(name: string, sym: string, italic=true){
-        this.symbols.set(name, () => <Var letter={sym} italic={italic}/>)
+    addLetter(name: string, sym: string, italic=true, useDefaultFont=false){
+        this.symbols.set(name, () => <Var letter={sym} italic={italic} useDefaultFont={useDefaultFont}/>)
     }
     addUnaryCommand(name: string, func: UnaryCommand){
         this.unaryCommands.set(name, func);
@@ -96,32 +96,37 @@ COMMANDS.addLetter('every', '∃');
 COMMANDS.addLetter('re', 'ℜ', false);
 COMMANDS.addLetter('imag', 'ℑ', false);
 
-COMMANDS.addLetter('reals', 'ℝ', false);
-COMMANDS.addLetter('naturals', 'ℕ', false);
-COMMANDS.addLetter('integers', 'ℤ', false);
-COMMANDS.addLetter('complexes', 'ℂ', false);
-COMMANDS.addLetter('rationals', 'ℚ', false);
+COMMANDS.addLetter('reals', 'ℝ', false, true);
+COMMANDS.addLetter('naturals', 'ℕ', false, true);
+COMMANDS.addLetter('integers', 'ℤ', false, true);
+COMMANDS.addLetter('complexes', 'ℂ', false, true);
+COMMANDS.addLetter('rationals', 'ℚ', false, true);
 
 COMMANDS.addSymbol('comma', () => <span className="comma">,</span>)
 
-COMMANDS.addSymbol('times', () => <BinOp text='·'/>)
-COMMANDS.addSymbol('divide', () => <BinOp text='÷'/>)
-COMMANDS.addSymbol('plus', () => <BinOp text='+'/>)
-COMMANDS.addSymbol('minus', () => <BinOp text='−'/>)
-COMMANDS.addSymbol('pm', () => <BinOp text='±'/>)
-COMMANDS.addSymbol('mp', () => <BinOp text='∓'/>)
-COMMANDS.addSymbol('cross', () => <BinOp text='×'/>)
-
 COMMANDS.addLetter('fact', '!', false);
-COMMANDS.addSymbol('etc', () => <BinOp text='...'/>)
 
-COMMANDS.addSymbol('lt', () => <BinOp text='<'/>)
-COMMANDS.addSymbol('gt', () => <BinOp text='>'/>)
-COMMANDS.addSymbol('eq', () => <BinOp text='='/>)
-COMMANDS.addSymbol('le', () => <BinOp text='≤'/>)
-COMMANDS.addSymbol('ge', () => <BinOp text='≥'/>)
-COMMANDS.addSymbol('ne', () => <BinOp text='≠'/>)
-COMMANDS.addSymbol('ae', () => <BinOp text='≈'/>)
+COMMANDS.addOperator('times', '·')
+COMMANDS.addOperator('divide', '÷')
+COMMANDS.addOperator('plus', '+')
+COMMANDS.addOperator('minus', '−')
+COMMANDS.addOperator('pm', '±')
+COMMANDS.addOperator('mp', '∓')
+COMMANDS.addOperator('cross', '×')
+COMMANDS.addOperator('etc', '...')
+
+COMMANDS.addOperator('mod');
+COMMANDS.addOperator('in', '∊');
+COMMANDS.addOperator('incl', '∍');
+COMMANDS.addOperator('prop', '∝');
+
+COMMANDS.addOperator('lt', '<');
+COMMANDS.addOperator('gt', '>')
+COMMANDS.addOperator('eq', '=')
+COMMANDS.addOperator('le', '≤')
+COMMANDS.addOperator('ge', '≥')
+COMMANDS.addOperator('ne', '≠')
+COMMANDS.addOperator('ae', '≈')
 
 COMMANDS.addBuiltin('sin');
 COMMANDS.addBuiltin('cos');
@@ -138,10 +143,6 @@ COMMANDS.addBuiltin('tanh');
 COMMANDS.addBuiltin('asinh');
 COMMANDS.addBuiltin('acosh');
 COMMANDS.addBuiltin('atanh');
-
-COMMANDS.addOperator('mod');
-COMMANDS.addOperator('in', '∊');
-COMMANDS.addOperator('includes', '∍');
 
 COMMANDS.addUnaryCommand('sup', a => <span className='sup'><sup>{a}</sup></span>)
 COMMANDS.addUnaryCommand('sub', a => <span className='sub'><sub>{a}</sub></span>)

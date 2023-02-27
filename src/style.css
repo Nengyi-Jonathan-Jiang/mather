@@ -2,6 +2,10 @@
     font-family: 'Latin Modern Math';
     src: url(fonts/latinmodern-math.otf) format('opentype');
 }
+@font-face {
+    font-family: Palatino;
+    src: url(fonts/palatino.ttf) format('truetype');
+}
 
 @font-face {
     font-family: Symbola;
@@ -14,8 +18,7 @@ body {
 }
 
 .math {
-    font-family: 'Latin Modern Math', Symbola, "Times New Roman", sans-serif;
-
+    font-family: 'Latin Modern Math', Symbola, Palatino, "Times New Roman", sans-serif;
     font-size: larger;
 
     box-sizing: border-box;
@@ -48,6 +51,10 @@ textarea {
     display: inline-block;
     box-sizing: border-box;
     position: relative;
+}
+
+.math *.default-font {
+    font-family: Symbola, Palatino, "Times New Roman", sans-serif;
 }
 
 .math span.space {
@@ -114,7 +121,7 @@ textarea {
     margin: 0 .2em;
 }
 
-.math var[data-noitalic] {
+.math var.no-italic {
     font-style: normal;
 }
 
