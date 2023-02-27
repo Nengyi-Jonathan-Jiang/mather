@@ -16,7 +16,7 @@ body {
 .math {
     font-family: 'Latin Modern Math', Symbola, "Times New Roman", sans-serif;
 
-    font-size: large;
+    font-size: larger;
 
     box-sizing: border-box;
     white-space: nowrap;
@@ -41,7 +41,7 @@ textarea {
     resize: vertical;
     outline: none;
     border: none;
-    font-family: 'Arial', sans-serif;
+    font-family: Roboto, arial, sans serif;
 }
 
 .math * {
@@ -50,8 +50,15 @@ textarea {
     position: relative;
 }
 
+.math span.space {
+    --space-width: .25;
+    display: inline-block;
+    width: calc(var(--space-width) * 1em);
+}
+
 .math sup, .math sub {
     font-size: 80%;
+    margin-left: .1em;
 }
 .math sup {
     vertical-align: text-bottom;
@@ -62,6 +69,7 @@ textarea {
 
 .math span.text {
     font-family: 'Times New Roman', serif;
+    white-space: pre;
 }
 
 .math span.number {}
@@ -122,21 +130,12 @@ textarea {
     margin: 0 .2em;
 }
 
-.math *.value + span.operator.minus-sign::after {
-    content: '−';
-    font-size: 100%;
-    font-weight: normal;
-    vertical-align: initial;
-}
-.math *.value + span.operator.minus-sign {
-    margin: 0 .2em;
+.math span.operator:first-child {
+    margin: 0 .2em 0 0;
 }
 
-.math span.operator.minus-sign {
-    margin: 0 -.02em 0 .1em;
-}
 
-.math span.operator.minus-sign::after {
+.math span.operator.negative-sign::after {
     content: '−';
     font-weight: bold;
     font-size: 50%;
@@ -151,7 +150,7 @@ textarea {
 .math span.fraction {
     font-size: 90%;
     text-align: center;
-    vertical-align: -0.65em;
+    vertical-align: -0.55em;
     padding: 0 0.2em;
 }
 
@@ -168,10 +167,14 @@ textarea {
     display: block;
 }
 
+.math .grouping {
+    --prefix-width: .55;
+}
+
 .math .grouping > .group-symbol {
     --p-height: 0;
     height: var(--p-height);
-    width: .4em;
+    width: calc(var(--prefix-width) * 1em);
     vertical-align: bottom;
 }
 

@@ -1,4 +1,4 @@
-import React, {MutableRefObject, ReactElement, useEffect, useRef} from "react";
+import React, {CSSProperties, MutableRefObject, ReactElement, useEffect, useRef} from "react";
 
 export function Text({children: text} : {children:string}){
     return <span className='text value'>{text}</span>
@@ -37,7 +37,7 @@ export function Fraction({numerator, denominator}:{numerator: ReactElement[], de
     </span>
 }
 
-export function Grouping({svg, children} : {svg: ()=>ReactElement, children: ReactElement[]}){
+export function Grouping({svg, children, width=.55} : {svg: ()=>ReactElement, children: ReactElement[], width?:number}){
     const lRef = useRef<HTMLElement>();
     const rRef = useRef<HTMLElement>();
     const gRef = useRef<HTMLElement>();
@@ -49,7 +49,7 @@ export function Grouping({svg, children} : {svg: ()=>ReactElement, children: Rea
         }
     });
 
-    return <div className="grouping value">
+    return <div className="grouping value" style={{'--prefix-width': width} as CSSProperties}>
         <span className='group-symbol prefix' ref={lRef as any}>{svg()}</span>
         <span className="group-content" ref={gRef as any}>{children}</span>
         <span className='group-symbol suffix' ref={rRef as any}>{svg()}</span>

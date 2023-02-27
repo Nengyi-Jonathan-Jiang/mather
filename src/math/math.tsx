@@ -1,31 +1,47 @@
 import {ReactElement} from "react";
 import {NumberEl, Text, Var} from "./components";
 import {COMMANDS} from './commands'
-import {cast, log} from "../../util/util";
+import {cast, log} from "../util/util";
 
 type _it = { readonly next : string, advance : () => void, readonly done : boolean };
 class MathParser {
+    private static readonly replacements = [
+        [/ ( +)/, '" "'],
+        [',', '\\comma '],
+        ['...', '\\etc '],
+        ['^', '\\sup '],
+        ['_', '\\sub '],
+        ['+', '\\plus '],
+        ['-', '\\minus '],
+        ['*', '\\times '],
+        ['/', '\\divide '],
+        ['>=', '\\ge '],
+        ['<=', '\\le '],
+        ['>', '\\gt '],
+        ['<', '\\lt '],
+        ['!=', '\\ne '],
+        ['~=', '\\ae'],
+        ['=', '\\eq '],
+        ['!', '\\fact '],
+        ['[', '\\arr{'],
+        ['(', '\\paren{'],
+        [/[\])]/g, '}'],
+    ] as [string|RegExp, string][];
+
+    private static replace(string: String){
+        function sanitizeRegexInput(reg : String){
+            return reg.replace(/[#-.]|[[-^]|[?|{}]/g, '\\$&');
+        }
+
+        for(const [key, replace] of this.replacements){
+            let r = key instanceof RegExp ? key.source : sanitizeRegexInput(key);
+            let k = new RegExp('(?<=^[^"]*(?:"[^"]*"[^"]*)*)' + r, 'g');
+            string = string.replaceAll(k, replace);
+        }
+        return string;
+    }
     public static parse(code: String): ReactElement[]{
-        code = code
-            .replaceAll(',', '\\comma ')
-            .replaceAll('...', '\\etc ')
-            .replaceAll('^', '\\sup ')
-            .replaceAll('_', '\\sub ')
-            .replaceAll('+', '\\plus ')
-            .replaceAll('-', '\\minus')
-            .replaceAll('*', '\\times ')
-            .replaceAll('/', '\\divide ')
-            .replaceAll('>=', '\\ge ')
-            .replaceAll('<=', '\\le ')
-            .replaceAll('>', '\\gt ')
-            .replaceAll('<', '\\lt ')
-            .replaceAll('!=', '\\ne ')
-            .replaceAll('~=', '\\ae')
-            .replaceAll('=', '\\eq ')
-            .replaceAll('!', '\\fact ')
-            .replaceAll('[', '\\arr{')
-            .replaceAll('(', '\\paren{')
-            .replaceAll(/[[)]/g, '}');
+        code = this.replace(code);
         let i = 0;
         return this._parseMany({
             get next () {return i >= code.length ? cast<string>(null) : code[i]},
