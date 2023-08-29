@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import './style.css';
 import './math-base.css'
 import './math-sqrt.css'
