@@ -8,11 +8,10 @@ function Digit({digit} : {digit: string}){
     return <span className="digit">{digit}</span>
 }
 
-export function Var({letter, italic=true, useDefaultFont=false} : {letter: string, italic?: boolean, useDefaultFont?: boolean}){
+export function Var({letter, italic=true} : {letter: string, italic?: boolean}){
     const c_letter_f = letter === 'f' ? 'letter-f ' : '';
     const c_italic = italic ? '' : 'no-italic ';
-    const c_useDefaultFont = useDefaultFont ? 'default-font ' : '';
-    return <var className={`${c_letter_f}${c_italic}${c_useDefaultFont}textual value`}>{letter}</var>
+    return <var className={`${c_letter_f}${c_italic}textual value`}>{letter}</var>
 }
 
 export function BinOp({text} : {text: string}){

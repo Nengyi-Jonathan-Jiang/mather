@@ -1,5 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './style.css';
+import './math-base.css'
+import './math-sqrt.css'
+import './math-fraction.css'
+import './math-grouping.css'
 import {MathRenderer} from "./math/math";
 
 function App() {

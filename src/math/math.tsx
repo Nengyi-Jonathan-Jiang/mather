@@ -8,6 +8,7 @@ class MathParser {
     private static readonly replacements = [
         [/ ( +)/, '" "'],
         [',', '\\comma '],
+        [':', '\\colon '],
         ['...', '\\etc '],
         ['^', '\\sup '],
         ['_', '\\sub '],

@@ -14,13 +14,13 @@ export const COMMANDS = new class {
         this.symbols.set(name, func);
     }
     addBuiltin(name: string, value?: string){
-        this.symbols.set(name, () => <span className='builtin'>{value ?? name}</span>)
+        this.symbols.set(name, () => <span className='func'>{value ?? name}</span>)
     }
     addOperator(name: string, value?:string){
         this.symbols.set(name, () => <BinOp text={value ?? name}/>)
     }
-    addLetter(name: string, sym: string, italic=true, useDefaultFont=false){
-        this.symbols.set(name, () => <Var letter={sym} italic={italic} useDefaultFont={useDefaultFont}/>)
+    addLetter(name: string, sym: string, italic=true){
+        this.symbols.set(name, () => <Var letter={sym} italic={italic}/>)
     }
     addUnaryCommand(name: string, func: UnaryCommand){
         this.unaryCommands.set(name, func);
@@ -90,19 +90,20 @@ COMMANDS.addLetter('psi', 'ψ');
 COMMANDS.addLetter('Omega', 'Ω', false);
 COMMANDS.addLetter('omega', 'ω')
 
-COMMANDS.addLetter('all', '∀');
-COMMANDS.addLetter('every', '∃');
+COMMANDS.addLetter('all', '∀', false);
+COMMANDS.addLetter('exist', '∃', false);
 
 COMMANDS.addLetter('re', 'ℜ', false);
 COMMANDS.addLetter('imag', 'ℑ', false);
 
-COMMANDS.addLetter('reals', 'ℝ', false, true);
-COMMANDS.addLetter('naturals', 'ℕ', false, true);
-COMMANDS.addLetter('integers', 'ℤ', false, true);
-COMMANDS.addLetter('complexes', 'ℂ', false, true);
-COMMANDS.addLetter('rationals', 'ℚ', false, true);
+COMMANDS.addLetter('reals', 'ℝ', false);
+COMMANDS.addLetter('naturals', 'ℕ', false);
+COMMANDS.addLetter('integers', 'ℤ', false);
+COMMANDS.addLetter('complexes', 'ℂ', false);
+COMMANDS.addLetter('rationals', 'ℚ', false);
 
-COMMANDS.addSymbol('comma', () => <span className="comma">,</span>)
+COMMANDS.addSymbol('comma', () => <span className="separator">,</span>)
+COMMANDS.addSymbol('colon', () => <span className="separator">:</span>)
 
 COMMANDS.addLetter('fact', '!', false);
 
@@ -119,6 +120,13 @@ COMMANDS.addOperator('mod');
 COMMANDS.addOperator('in', '∊');
 COMMANDS.addOperator('incl', '∍');
 COMMANDS.addOperator('prop', '∝');
+
+COMMANDS.addOperator('to', '→');
+COMMANDS.addOperator('iff', 'iff');
+COMMANDS.addOperator('etc', 'etc.');
+COMMANDS.addOperator('implies', '⇒');
+COMMANDS.addOperator('', '⇒');
+COMMANDS.addOperator('st', 's.t.');
 
 COMMANDS.addOperator('lt', '<');
 COMMANDS.addOperator('gt', '>')
@@ -152,6 +160,16 @@ COMMANDS.addUnaryCommand('arr', a => <Grouping svg={() =>
         <path d="M8 0 L3 0 L3 24 L8 24 L8 23 L4 23 L4 1 L8 1"/>
     </svg>
 }>{a}</Grouping>)
+COMMANDS.addUnaryCommand('abs', a => <Grouping svg={() =>
+    <svg preserveAspectRatio="none" viewBox = "0 0 3 24">
+        <path d = "M1 0 L2 0 2 24 1 24"/>
+    </svg>
+} width={.15}>{a}</Grouping>)
+COMMANDS.addUnaryCommand('angle', a => <Grouping svg={() =>
+    <svg preserveAspectRatio="none" viewBox = "0 0 8 24">
+        <path d = "M8 0 L0 12 8 24" strokeWidth={1} stroke={"black"} fill={"none"}/>
+    </svg>
+} width={.3}>{a}</Grouping>)
 COMMANDS.addUnaryCommand('paren', a => <Grouping svg={() =>
     <svg preserveAspectRatio="none" viewBox = "3 0 106 186">
         <path d = "M85 0 A61 101 0 0 0 85 186 L75 186 A75 101 0 0 1 75 0"/>
