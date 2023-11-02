@@ -109,6 +109,7 @@ COMMANDS.addLetter('delta', 'δ');
 COMMANDS.addLetter('nabla', '∇', false);
 COMMANDS.addLetter('del', '∂');
 COMMANDS.addLetter('epsilon', 'ϵ');
+COMMANDS.addLetter('e', 'ℯ');
 COMMANDS.addLetter('zeta', 'ζ');
 COMMANDS.addLetter('hbar', 'ħ');
 COMMANDS.addLetter('eta', 'η');
@@ -137,7 +138,20 @@ COMMANDS.addLetter('chi', 'χ');
 COMMANDS.addLetter('Psi', 'Ψ', false);
 COMMANDS.addLetter('psi', 'ψ');
 COMMANDS.addLetter('Omega', 'Ω', false);
-COMMANDS.addLetter('omega', 'ω')
+COMMANDS.addLetter('omega', 'ω');
+
+COMMANDS.addOperator('and', '∧');
+COMMANDS.addOperator('or', '∨');
+COMMANDS.addLetter('not', '¬', false);
+COMMANDS.addOperator('xor', '⊕');
+COMMANDS.addLetter('intersection', '⋂', false);
+COMMANDS.addLetter('union', '⋃', false);
+
+COMMANDS.addLetter('H', 'ℋ', false);
+COMMANDS.addLetter('L', 'ℒ', false);
+
+COMMANDS.addLetter('aleph', 'ℵ', false)
+COMMANDS.addLetter('continuum', '𝖈', false)
 
 COMMANDS.addLetter('all', '∀', false);
 COMMANDS.addLetter('exist', '∃', false);
@@ -150,9 +164,10 @@ COMMANDS.addLetter('naturals', 'ℕ', false);
 COMMANDS.addLetter('integers', 'ℤ', false);
 COMMANDS.addLetter('complexes', 'ℂ', false);
 COMMANDS.addLetter('rationals', 'ℚ', false);
+COMMANDS.addLetter('quaternions', 'ℍ', false);
 
-COMMANDS.addSymbol('comma', () => Span('separator', ','))
-COMMANDS.addSymbol('colon', () => Span('separator', ':'))
+COMMANDS.addSymbol('comma', () => Span('separator', ','));
+COMMANDS.addSymbol('colon', () => Span('separator', ':'));
 
 COMMANDS.addLetter('fact', '!', false);
 
@@ -163,7 +178,10 @@ COMMANDS.addOperator('minus', '−')
 COMMANDS.addOperator('pm', '±')
 COMMANDS.addOperator('mp', '∓')
 COMMANDS.addOperator('cross', '×')
-COMMANDS.addOperator('etc', '...')
+COMMANDS.addOperator('hdots', '⋯')
+COMMANDS.addOperator('vdots', '⋮')
+COMMANDS.addOperator('ratio', ':');
+COMMANDS.addOperator('analogous', '∷');
 
 COMMANDS.addOperator('mod');
 COMMANDS.addOperator('in', '∊');
@@ -174,6 +192,7 @@ COMMANDS.addOperator('to', '→');
 COMMANDS.addOperator('iff', 'iff');
 COMMANDS.addOperator('etc', 'etc.');
 COMMANDS.addOperator('implies', '⇒');
+COMMANDS.addOperator('therefore', '∴');
 COMMANDS.addOperator('', '⇒');
 COMMANDS.addOperator('st', 's.t.');
 

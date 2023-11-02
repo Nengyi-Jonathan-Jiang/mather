@@ -2,4 +2,9 @@
     display: block;
     height: 4px;
     width: 100%;
+    max-width: 1.5em;
+
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: -1px;
 }

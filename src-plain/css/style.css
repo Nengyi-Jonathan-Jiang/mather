@@ -29,12 +29,11 @@ textarea {
 }
 
 .math sup, .math sub {
-    font-size: 80%;
+    font-size: 70%;
     margin-left: .1em;
 }
 .math sup {
-    /*vertical-align: text-bottom;*/
-    vertical-align: 0;
+    vertical-align: -.1em;
 }
 
 .math span.sup{

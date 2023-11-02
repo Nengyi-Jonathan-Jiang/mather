@@ -34,10 +34,13 @@ const Div = (className, children = [], style = '') => Element('div', className, 
 const SVG = (viewBox, className, path, fill=true) => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
     svg.setAttributeNS(null, 'preserveAspectRatio', 'none');
-    svg.setAttributeNS(null, 'stroke', 'black');
-    if(fill) svg.setAttributeNS(null, 'fill', 'black')
+    if(fill){
+        svg.setAttributeNS(null, 'fill', 'black')
+        svg.setAttributeNS(null, 'stroke', 'none');
+    }
     else {
         svg.setAttributeNS(null, 'fill', 'none')
+        svg.setAttributeNS(null, 'stroke', 'black');
         svg.setAttributeNS(null, 'strokeWidth', '1');
     }
 
@@ -83,7 +86,10 @@ function Sqrt(children) {
 }
 
 function WideHat(children) {
-    const hat = Span('hat above-line', '', [SVG('0 0 6 5', '', 'M0 4 L 3 1 6 4', false)]);
+    const hat = Span('hat above-line', '', [SVG(
+        '0 0 6 5', '',
+        'M0 5 L 0 4.5 3 0 6 4.5 6 5 3 2'
+    )]);
     const inner = Span('hat above-content expr', '', children);
 
     return Div('hat above value', [hat, inner]);
