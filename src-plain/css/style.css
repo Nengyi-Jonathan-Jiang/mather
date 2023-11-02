@@ -1,4 +1,8 @@
 /*@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');*/
+@font-face {
+    font-family: 'Symbola';
+    src: url("../fonts/Symbola.woff") format("woff");
+}
 
 body {
     margin: 0;
@@ -71,7 +75,16 @@ textarea {
 }
 
 .math .int {
+    font-family: 'Symbola', 'Times New Roman', sans-serif;
     /*font-size: 150%;*/
-    vertical-align: -0.2em;
+    vertical-align: -0.1em;
+    transform: scaleX(.7);
     font-size: 150%;
+}
+
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
 }

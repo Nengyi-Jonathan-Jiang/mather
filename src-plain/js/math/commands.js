@@ -109,7 +109,6 @@ COMMANDS.addLetter('delta', 'δ');
 COMMANDS.addLetter('nabla', '∇', false);
 COMMANDS.addLetter('del', '∂');
 COMMANDS.addLetter('epsilon', 'ϵ');
-COMMANDS.addLetter('e', 'ℯ');
 COMMANDS.addLetter('zeta', 'ζ');
 COMMANDS.addLetter('hbar', 'ħ');
 COMMANDS.addLetter('eta', 'η');
@@ -144,11 +143,12 @@ COMMANDS.addOperator('and', '∧');
 COMMANDS.addOperator('or', '∨');
 COMMANDS.addLetter('not', '¬', false);
 COMMANDS.addOperator('xor', '⊕');
+COMMANDS.addOperator('define', '≔')
 COMMANDS.addLetter('intersection', '⋂', false);
 COMMANDS.addLetter('union', '⋃', false);
 
-COMMANDS.addLetter('H', 'ℋ', false);
-COMMANDS.addLetter('L', 'ℒ', false);
+COMMANDS.addLetter('hamiltonian', 'ℋ', false);
+COMMANDS.addLetter('lagrangian', 'ℒ', false);
 
 COMMANDS.addLetter('aleph', 'ℵ', false)
 COMMANDS.addLetter('continuum', '𝖈', false)
@@ -192,6 +192,7 @@ COMMANDS.addOperator('to', '→');
 COMMANDS.addOperator('iff', 'iff');
 COMMANDS.addOperator('etc', 'etc.');
 COMMANDS.addOperator('implies', '⇒');
+COMMANDS.addOperator('bimplies', '⇔');
 COMMANDS.addOperator('therefore', '∴');
 COMMANDS.addOperator('', '⇒');
 COMMANDS.addOperator('st', 's.t.');
@@ -220,10 +221,16 @@ COMMANDS.addBuiltin('asinh');
 COMMANDS.addBuiltin('acosh');
 COMMANDS.addBuiltin('atanh');
 
+COMMANDS.addBuiltin('ln');
+COMMANDS.addBuiltin('log');
+
 COMMANDS.addSymbol('prime', () => TextEl('\''));
 
 COMMANDS.addUnaryCommand('sup', a => Span('sup', '', Element('sup', '', '', a)))
 COMMANDS.addUnaryCommand('sub', a => Span('sub', '', Element('sub', '', '', a)))
+
+COMMANDS.addUnaryCommand('b', a => Span('bold', '', a))
+COMMANDS.addUnaryCommand('it', a => Span('italic', '', a))
 
 COMMANDS.addUnaryCommand('arr', a => Grouping(() => SVG("0 0 11 24", '', "M8 0 L3 0 L3 24 L8 24 L8 23 L4 23 L4 1 L8 1"), a))
 COMMANDS.addUnaryCommand('abs', a => Grouping(() => SVG("0 0 3 24", '', "M1 0 L2 0 2 24 1 24"), a, .15))
