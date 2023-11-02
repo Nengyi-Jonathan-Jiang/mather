@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');*/
 
 body {
     margin: 0;
@@ -33,11 +33,13 @@ textarea {
     margin-left: .1em;
 }
 .math sup {
-    vertical-align: text-bottom;
+    /*vertical-align: text-bottom;*/
+    vertical-align: 0;
 }
 
 .math span.sup{
-    vertical-align: .3em;
+    vertical-align: .5em;
+    margin-bottom: -.2em;
 }
 
 .math span.text {
@@ -69,6 +71,8 @@ textarea {
     width: .1em;
 }
 
-.math big {
+.math .int {
+    /*font-size: 150%;*/
+    vertical-align: -0.2em;
     font-size: 150%;
 }

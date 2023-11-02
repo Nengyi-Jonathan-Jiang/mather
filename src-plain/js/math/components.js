@@ -1,15 +1,14 @@
 /** @typedef {(HTMLElement|__children_t)[]} __children_t */
 /**
  * @param {HTMLElement} el
- * @param {__children_t} arr
+ * @param {__children_t} children
  */
-function __appendChildrenToEl(el, arr) {
-    for (let i of arr) {
-        if (!i) continue;
-
-        if (i instanceof HTMLElement) {
-            el.appendChild(i);
-        } else {
+function __appendChildrenToEl(el, children) {
+    if (!children) return;
+    if (children instanceof Node) {
+        el.appendChild(children);
+    } else {
+        for (let i of children) {
             __appendChildrenToEl(el, i);
         }
     }
@@ -32,14 +31,21 @@ function Span(className, innerText = '', children = [], style = '') {
 
 /** @returns {HTMLDivElement} */
 const Div = (className, children = [], style = '') => Element('div', className, '', children, style);
-const SVG = (viewBox, className, path) => {
-    const svg = document.createElement('svg');
-    svg.setAttribute('preserveAspectRatio', 'none');
-    svg.setAttribute('viewBox', viewBox);
+const SVG = (viewBox, className, path, fill=true) => {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+    svg.setAttributeNS(null, 'preserveAspectRatio', 'none');
+    svg.setAttributeNS(null, 'stroke', 'black');
+    if(fill) svg.setAttributeNS(null, 'fill', 'black')
+    else {
+        svg.setAttributeNS(null, 'fill', 'none')
+        svg.setAttributeNS(null, 'strokeWidth', '1');
+    }
+
+    svg.setAttributeNS(null, 'viewBox', viewBox);
     if (className?.length) svg.className = className;
 
-    const pathEl = document.createElement('path');
-    pathEl.setAttribute('d', path);
+    const pathEl = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+    pathEl.setAttributeNS(null, 'd', path);
     svg.appendChild(pathEl);
     return svg;
 }
@@ -58,7 +64,7 @@ function Fraction(numerator, denominator) {
 function Grouping(svg, children, width = .55) {
     console.log(svg, children, width);
     const prefix = Span('group-symbol prefix', '', [svg()]);
-    const content = Span('group-content', '', children);
+    const content = Span('group-content expr', '', children);
     const suffix = Span('group-symbol suffix', '', [svg()]);
 
     const H = suffix.getBoundingClientRect()?.height ?? 1;
@@ -66,14 +72,19 @@ function Grouping(svg, children, width = .55) {
         bracket.style.setProperty('--p-height', `${H}px`);
     }
 
-    return Div('grouping value', [prefix, content, suffix], '--prefix-width: width');
+    return Div('grouping value', [prefix, content, suffix], `--prefix-width: ${width}`);
 }
 
-function Root(children) {
+function Sqrt(children) {
     const root = Span('sqrt prefix', '', [SVG('0 0 32 54', 'sqrt', 'M0 33 L7 27 L12.5 47 L13 47 L30 0 L32 0 L13 54 L11 54 L4.5 31 L0 33')]);
     const inner = Span('sqrt-content expr', '', children);
-    const H = inner.current?.getBoundingClientRect()?.height ?? 1;
-    root.style.setProperty('--p-height', `${H}px`);
 
     return Div('sqrt value', [root, inner]);
+}
+
+function WideHat(children) {
+    const hat = Span('hat above-line', '', [SVG('0 0 6 5', '', 'M0 4 L 3 1 6 4', false)]);
+    const inner = Span('hat above-content expr', '', children);
+
+    return Div('hat above value', [hat, inner]);
 }

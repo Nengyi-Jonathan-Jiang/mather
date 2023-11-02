@@ -4,6 +4,7 @@ class MathParser {
     static replacements = [
         [/ ( +)/, '" "'],
         [',', '\\comma '],
+        ['\'', '\\prime'],
         [':', '\\colon '],
         ['...', '\\etc '],
         ['^', '\\sup '],

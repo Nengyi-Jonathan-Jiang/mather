@@ -201,24 +201,26 @@ COMMANDS.addBuiltin('asinh');
 COMMANDS.addBuiltin('acosh');
 COMMANDS.addBuiltin('atanh');
 
-COMMANDS.addUnaryCommand('sup', a => Span('sup', Element('sup', '', '', a)))
-COMMANDS.addUnaryCommand('sub', a => Span('sub', Element('sub', '', '', a)))
+COMMANDS.addSymbol('prime', () => TextEl('\''));
+
+COMMANDS.addUnaryCommand('sup', a => Span('sup', '', Element('sup', '', '', a)))
+COMMANDS.addUnaryCommand('sub', a => Span('sub', '', Element('sub', '', '', a)))
 
 COMMANDS.addUnaryCommand('arr', a => Grouping(() => SVG("0 0 11 24", '', "M8 0 L3 0 L3 24 L8 24 L8 23 L4 23 L4 1 L8 1"), a))
-COMMANDS.addUnaryCommand('abs', a => Grouping(() => SVG("0 0 3 24", '', "M1 0 L2 0 2 24 1 24", .15), a))
+COMMANDS.addUnaryCommand('abs', a => Grouping(() => SVG("0 0 3 24", '', "M1 0 L2 0 2 24 1 24"), a, .15))
 
 // strokeWidth={1} stroke={"black"} fill={"none"}
-COMMANDS.addUnaryCommand('angle', a => Grouping(() => SVG("0 0 8 24", '', "M8 0 L0 12 8 24", .3), a))
+COMMANDS.addUnaryCommand('angle', a => Grouping(() => SVG("0 0 8 24", '', "M8 0 L0 12 8 24", false), a, .3))
 COMMANDS.addUnaryCommand('paren', a => Grouping(() => SVG("3 0 106 186", '', "M85 0 A61 101 0 0 0 85 186 L75 186 A75 101 0 0 1 75 0"), a))
-COMMANDS.addUnaryCommand('set', a => Grouping(() => SVG("10 0 210 350", '', "M170 0 L170 6 A47 52 0 0 0 123 60 L123 127 A35 48 0 0 1 88 175 A35 48 0 0 1 123 223 L123 290 A47 52 0 0 0 170 344 L170 350 L160 350 A58 49 0 0 1 102 301 L103 220 A45 40 0 0 0 58 180 L58 170 A45 40 0 0 0 103 130 L103 49 A58 49 0 0 1 161 0", .7), a))
+COMMANDS.addUnaryCommand('set', a => Grouping(() => SVG("10 0 210 350", '', "M170 0 L170 6 A47 52 0 0 0 123 60 L123 127 A35 48 0 0 1 88 175 A35 48 0 0 1 123 223 L123 290 A47 52 0 0 0 170 344 L170 350 L160 350 A58 49 0 0 1 102 301 L103 220 A45 40 0 0 0 58 180 L58 170 A45 40 0 0 0 103 130 L103 49 A58 49 0 0 1 161 0"), a, .7))
 
-COMMANDS.addUnaryCommand('int', function (a) {
+COMMANDS.addSymbol('int', () => {
     return Div('', [
-        Element('big', 'int', '∫'),
-        ...a
+        Span('int', '∫')
     ])
 })
 
-COMMANDS.addUnaryCommand('sqrt', Root)
+COMMANDS.addUnaryCommand('sqrt', Sqrt)
+COMMANDS.addUnaryCommand('hat', WideHat)
 
 COMMANDS.addBinaryCommand('frac', Fraction)
