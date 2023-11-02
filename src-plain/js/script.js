@@ -1,35 +1,29 @@
+function render(str, targetElement){
+    let parse = MathParser.parse(str);
+    let d = Div('math', parse)
+    while(targetElement.firstChild) targetElement.firstChild.remove();
+    targetElement.appendChild(d)
+}
 
-// function App() {
-//     const [input, setInput] = useState(
-//         window.localStorage.getItem('matherSave')
-//         ??
-//         "3.14159 a * 180 + \\frac { 2 + \\frac {-2 \\alpha} \\zeta *  \\hbar } { r \\theta + \\frac 2 3 \\pi }"
-//     );
-//     const inputEl = useRef<HTMLTextAreaElement>();
-//
-//     function save(value: string | undefined) {
-//         window.localStorage.setItem('matherSave', value as string);
-//     }
-//
-//     return <>
-//         <textarea
-//             spellCheck='false'
-//             value={input}
-//             ref={inputEl as any}
-//             onInput={_ => {
-//                 setInput(inputEl.current?.value as string);
-//                 save(inputEl.current?.value);
-//             }}
-//             onKeyDown={e => {
-//                 if (e.key.toLowerCase() === 's' && e.ctrlKey) {
-//                     save(inputEl.current?.value);
-//                     e.preventDefault();
-//                     alert('Saved progress');
-//                 }
-//             }}
-//         />
-//         <div id="math-output">{
-//             input.split(/\s*\n\s*/g).map(entry => <MathRenderer code={entry}/>)
-//         }</div>
-//     </>;
-// }
+function save(value) {
+    if (value) {
+        window.localStorage.setItem('matherSave', value);
+    }
+}
+
+ const displayEl = document.createElement('div')
+displayEl.id = 'math-output'
+
+const savedInput = (
+    window.localStorage.getItem('matherSave') ?? "3.14159 a * 180 + \\frac { 2 + \\frac {-2 \\alpha} \\zeta *  \\hbar } { r \\theta + \\frac 2 3 \\pi }"
+)
+console.log(savedInput)
+const inputEl = document.createElement('textarea');
+inputEl.spellcheck = false;
+inputEl.value = savedInput;
+inputEl.oninput = inputEl.onkeydown = inputEl.onchange = _ => {
+    save(inputEl.value);
+    render(inputEl.value, displayEl)
+}
+
+document.getElementById('root').append(inputEl, displayEl)

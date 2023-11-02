@@ -1,11 +1,7 @@
-import {ReactElement} from "react";
-import {NumberEl, Text, Var} from "./components";
-import {COMMANDS} from './commands'
-import {cast, log} from "../util/util";
+/** @typedef {{readonly next : string, advance : () => void, readonly done : boolean}} _it*/
 
-type _it = { readonly next : string, advance : () => void, readonly done : boolean };
 class MathParser {
-    private static readonly replacements = [
+    static replacements = [
         [/ ( +)/, '" "'],
         [',', '\\comma '],
         [':', '\\colon '],
@@ -27,10 +23,10 @@ class MathParser {
         ['[', '\\arr{'],
         ['(', '\\paren{'],
         [/[\])]/g, '}'],
-    ] as [string|RegExp, string][];
+    ]
 
-    private static replace(string: String){
-        function sanitizeRegexInput(reg : String){
+    static #sanitize(string=''){
+        function sanitizeRegexInput(reg){
             return reg.replace(/[#-.]|[[-^]|[?|{}]/g, '\\$&');
         }
 
@@ -41,25 +37,26 @@ class MathParser {
         }
         return string;
     }
-    public static parse(code: String): ReactElement[]{
-        code = this.replace(code);
+    static parse(code=''){
+        code = this.#sanitize(code);
         let i = 0;
-        return this._parseMany({
-            get next () {return i >= code.length ? cast<string>(null) : code[i]},
+        return this.#parseMany({
+            get next () {return i >= code.length ? null : code[i]},
             advance : () => {i++},
             get done() {return i >= code.length }
         });
     }
-    private static _parseSingle(it: _it) : ReactElement {
+    /** @param {_it} it */
+    static #parseSingle(it) {
         while(!it.done && it.next === ' ') it.advance();
         // If nothing to parse
-        if(it.next == null || it.done || it.next === '}') return <></>
+        if(it.next == null || it.done || it.next === '}') return null
         // If block to parse
         if(it.next === '{'){
             it.advance();
-            let elements = this._parseMany(it);
+            let elements = this.#parseMany(it);
             it.advance(); // Skip over the closing brace
-            return <>{elements}</>
+            return elements
         }
         // If string to parse
         if(it.next === '"') {
@@ -73,7 +70,7 @@ class MathParser {
                 it.advance();
             }
             it.advance();
-            return <Text>{text}</Text>
+            return TextEl(text)
         }
         // If number to parse
         if(it.next.match(/[\d.]/)) {
@@ -85,7 +82,7 @@ class MathParser {
                 it.advance();
             }
             log('parsed number: ' + n);
-            return <NumberEl value={n}/>;
+            return NumberEl(n);
         }
         // If command to parse
         if(it.next === '\\'){
@@ -96,51 +93,37 @@ class MathParser {
                 it.advance();
             }
             if(COMMANDS.hasSymbol(s)){
-                return COMMANDS.getSymbol(s);
+                return COMMANDS.createSymbol(s);
             }
             else if(COMMANDS.hasUnaryCommand(s)){
-                let p1 = this._parseSingle(it);
+                let p1 = this.#parseSingle(it);
                 return COMMANDS.applyUnaryCommand(s, [p1]);
             }
             else if(COMMANDS.hasBinaryCommand(s)){
-                let p1 = this._parseSingle(it);
-                let p2 = this._parseSingle(it);
+                let p1 = this.#parseSingle(it);
+                let p2 = this.#parseSingle(it);
                 return COMMANDS.applyBinaryCommand(s, [p1], [p2]);
             }
-            else return <Text>{s}</Text>   // (-_-) sad
+            else return TextEl(s);
         }
         // If var to parse
         if(it.next.match(/[a-zA-Z]+/)) {
             let s = it.next;
             it.advance();
             log('parsed variable: ' + s)
-            return <Var letter={s}></Var>
+            return Var(s)
         }
 
         log('Unknown:' + it.next);
         it.advance();
-        return <></>    // We don't know what to parse
+        return null
     }
-    private static _parseMany(it: _it) : ReactElement[] {
+    static #parseMany(it) {
         while(!it.done && it.next === ' ') it.advance();
 
         if(it.done || it.next === '}') return [];
-        let el = this._parseSingle(it);
+        let el = this.#parseSingle(it);
 
-        return [el, ...this._parseMany(it)];
+        return [el, ...this.#parseMany(it)];
     }
-
-    public static export(data: any) {
-        // TODO
-        console.log(data);
-    }
-}
-
-// @ts-ignore
-window.MathParser = MathParser;
-
-export function MathRenderer({code} : {code: string}) {
-    return <div className="math">
-        {MathParser.parse(code)}
-    </div>
 }
