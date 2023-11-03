@@ -7,7 +7,7 @@
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 #root {
@@ -18,6 +18,7 @@ body {
 #math-output {
     border: 1px solid black;
     margin: 5px;
+    padding: 5px;
     height: fit-content;
 }
 
@@ -31,7 +32,7 @@ textarea {
     resize: none;
     outline: none;
     border: none;
-    font-family: Nunito, Roboto, arial, sans serif;
+    font-family: "JetBrains Mono", "Courier New", monospace;
     font-size: large;
     display: block;
     box-sizing: border-box;
@@ -42,9 +43,11 @@ textarea {
     margin-left: .1em;
 }
 .math sup {
-    vertical-align: -.1em;
+    vertical-align: -.06em;
 }
-
+.math sub {
+    vertical-align: -.36em;
+}
 .math span.sup{
     vertical-align: .5em;
     margin-bottom: -.2em;
@@ -79,12 +82,17 @@ textarea {
     width: .1em;
 }
 
-.math .int {
-    font-family: 'Symbola', 'Times New Roman', sans-serif;
-    /*font-size: 150%;*/
-    vertical-align: -0.1em;
+.math .at:not(.expr) {
+    vertical-align: -0.14em;
     transform: scaleX(.7);
-    font-size: 150%;
+    font-size: 250%;
+}
+
+.math .int:not(.expr) {
+    font-family: 'Symbola', 'Times New Roman', sans-serif;
+    vertical-align: -0.15em;
+    transform: scaleX(.7);
+    font-size: 200%;
 }
 
 .bold {

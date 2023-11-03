@@ -57,7 +57,7 @@ console.log(savedInput)
 const inputEl = document.createElement('textarea');
 inputEl.spellcheck = false;
 inputEl.value = savedInput;
-inputEl.oninput = inputEl.onkeydown = inputEl.onchange = _ => {
+inputEl.oninput = _ => {
     save(inputEl.value);
     render(inputEl.value, displayEl)
 }

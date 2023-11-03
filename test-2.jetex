@@ -1,0 +1,15 @@
+"Integration by parts example: "x  \sin(x)
+"
+\int_^0\pi x\sin(x)dx
+\indent\Let  u=x, dv=\sin(x)dx,
+\indent\indent du=dx, v=-\cos(x)
+=[-x\cos(x)]_^0\pi+\int_^0\pi\cos(x)dx
+=\sin(x)|_^0\pi-\pi\cos\pi
+=\box{\pi}
+"
+"
+"Sulfur (S) and sulfur dioxide (SO"_2") can react with Ozone
+"to form sulfuric acid (H"_2\SO_4") in the following reactions:
+"
+\indent\S_"(s)" + \H_2\O_"(l)" + \O_3_"(g)" \to \H_2\S\O_4_"(aq)"
+\indent3\SO_2_"(g)" + 3\H_2\O_"(l)" + \O_3_"(g)"\to 3\H_2\S\O_4_"(aq)"

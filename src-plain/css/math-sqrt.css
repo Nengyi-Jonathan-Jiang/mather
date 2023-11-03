@@ -1,6 +1,6 @@
 .math .sqrt.prefix {
     --p-height: 0;
-    height: var(--p-height);
+    height: calc(var(--p-height) + 1px);
     width: 0.95em;
     vertical-align: bottom;
 }

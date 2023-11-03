@@ -1,19 +1,51 @@
-.math span.fraction {
+.math span.fraction,
+.math span.supsub {
     font-size: 70%;
-    text-align: center;
     vertical-align: -0.35em;
-    padding: 0 0.2em;
+}
+
+.math span.fraction span.numerator,
+.math span.supsub span.supsub-top{
+    padding: 0 .1em;
+    display: block;
 }
 
 .math span.fraction span.numerator {
-    padding: 0 .1em .1em .1em;
+    padding-bottom: .1em;
+}
+
+.math span.fraction span.denominator,
+.math span.supsub span.supsub-bottom {
+    float: right;
+    width: 100%;
+    padding: 0 0.1em;
     display: block;
+}
+
+.math span.fraction {
+    padding: 0 0.2em;
+    text-align: center;
+}
+
+.math span.supsub.before {
+    text-align: right;
 }
 
 .math span.fraction span.denominator {
     border-top: 1px solid;
-    float: right;
-    width: 100%;
-    padding: 0.1em 0.1em 0 0.1em;
-    display: block;
+    padding-top: 0.1em;
+}
+
+.math .at>span.supsub>span.supsub-top>span.supsub-inner {
+    vertical-align: 1em;
+}
+.math .at>span.supsub>span.supsub-bottom>span.supsub-inner {
+    vertical-align: -1em;
+}
+
+.math .int>span.supsub>span.supsub-top>span.supsub-inner {
+    margin-left: -0.1em;
+}
+.math .int>span.supsub>span.supsub-bottom>span.supsub-inner {
+    margin-left: -0.5em;
 }

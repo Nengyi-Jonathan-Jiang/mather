@@ -100,6 +100,8 @@ const COMMANDS = new class {
     }
 }()
 
+COMMANDS.addSymbol('indent', () => Element('span', 'indent'));
+
 COMMANDS.addLetter('alpha', 'α');
 COMMANDS.addLetter('beta', 'β');
 COMMANDS.addLetter('Gamma', 'Γ', false);
@@ -107,9 +109,9 @@ COMMANDS.addLetter('gamma', 'γ');
 COMMANDS.addLetter('Delta', 'Δ', false);
 COMMANDS.addLetter('delta', 'δ');
 COMMANDS.addLetter('nabla', '∇', false);
-COMMANDS.addLetter('del', '∂');
-COMMANDS.addLetter('epsilon', 'ϵ');
-COMMANDS.addLetter('zeta', 'ζ');
+COMMANDS.addLetter('del', '∂', false);
+COMMANDS.addLetter('epsilon', 'ϵ', false);
+COMMANDS.addLetter('zeta', 'ζ', false);
 COMMANDS.addLetter('hbar', 'ħ');
 COMMANDS.addLetter('eta', 'η');
 COMMANDS.addLetter('Theta', 'Θ', false);
@@ -124,9 +126,9 @@ COMMANDS.addLetter('lambda', 'λ');
 COMMANDS.addLetter('mu', 'μ');
 COMMANDS.addLetter('nu', 'ν');
 COMMANDS.addLetter('Xi', 'Ξ', false);
-COMMANDS.addLetter('xi', 'ξ');
+COMMANDS.addLetter('xi', 'ξ', false);
 COMMANDS.addLetter('Pi', 'Π', false);
-COMMANDS.addLetter('pi', 'π');
+COMMANDS.addLetter('pi', 'π', false);
 COMMANDS.addLetter('rho', 'ρ');
 COMMANDS.addLetter('Sigma', 'Σ', false);
 COMMANDS.addLetter('sigma', 'σ');
@@ -149,6 +151,7 @@ COMMANDS.addLetter('union', '⋃', false);
 COMMANDS.addLetter('hamiltonian', 'ℋ', false);
 COMMANDS.addLetter('lagrangian', 'ℒ', false);
 
+COMMANDS.addLetter('inf', '∞', false)
 COMMANDS.addLetter('aleph', 'ℵ', false)
 COMMANDS.addLetter('continuum', '𝖈', false)
 
@@ -226,28 +229,36 @@ COMMANDS.addBuiltin('ln');
 COMMANDS.addBuiltin('log');
 
 COMMANDS.addSymbol('prime', () => TextEl('\''));
+COMMANDS.addSymbol('conj', () => TextEl('*'));
+COMMANDS.addSymbol('dagger', () => TextEl('†'));
 
-COMMANDS.addUnaryCommand('sup', a => Span('sup', '', Element('sup', '', '', a)))
-COMMANDS.addUnaryCommand('sub', a => Span('sub', '', Element('sub', '', '', a)))
+COMMANDS.addUnaryCommand('sup', a => Span('value sup', '', Element('sup', '', '', a)))
+COMMANDS.addUnaryCommand('sub', a => Span('value sub', '', Element('sub', '', '', a)))
 
 COMMANDS.addUnaryCommand('b', a => Span('bold', '', a))
 COMMANDS.addUnaryCommand('it', a => Span('italic', '', a))
 
-COMMANDS.addUnaryCommand('arr', a => Grouping(() => SVG("0 0 11 24", '', "M8 0 L3 0 L3 24 L8 24 L8 23 L4 23 L4 1 L8 1"), a))
+COMMANDS.addUnaryCommand('arr', a => Grouping(() => SVG("3 0 5 24", '', "M8 0 L3 0 L3 24 L8 24 L8 23 L4 23 L4 1 L8 1"), a, .25))
 COMMANDS.addUnaryCommand('abs', a => Grouping(() => SVG("0 0 3 24", '', "M1 0 L2 0 2 24 1 24"), a, .15))
 
-// strokeWidth={1} stroke={"black"} fill={"none"}
-COMMANDS.addUnaryCommand('angle', a => Grouping(() => SVG("0 0 8 24", '', "M8 0 L0 12 8 24", false), a, .3))
-COMMANDS.addUnaryCommand('paren', a => Grouping(() => SVG("3 0 106 186", '', "M85 0 A61 101 0 0 0 85 186 L75 186 A75 101 0 0 1 75 0"), a))
-COMMANDS.addUnaryCommand('set', a => Grouping(() => SVG("10 0 210 350", '', "M170 0 L170 6 A47 52 0 0 0 123 60 L123 127 A35 48 0 0 1 88 175 A35 48 0 0 1 123 223 L123 290 A47 52 0 0 0 170 344 L170 350 L160 350 A58 49 0 0 1 102 301 L103 220 A45 40 0 0 0 58 180 L58 170 A45 40 0 0 0 103 130 L103 49 A58 49 0 0 1 161 0"), a, .7))
+COMMANDS.addUnaryCommand('angle', a => Grouping(() => SVG("0 0 8 24", '', "M8 0 L6 0 0 12 6 24 8 24 2 12"), a, .2))
+COMMANDS.addUnaryCommand('paren', a => Grouping(() => SVG("28 0 56 187", '', "M85 0 A61 101 0 0 0 85 186 L75 186 A75 101 0 0 1 75 0"), a, .3))
+COMMANDS.addUnaryCommand('set', a => Grouping(() => SVG("60 0 115 350", '', "M170 0 L170 6 A47 52 0 0 0 123 60 L123 127 A35 48 0 0 1 88 175 A35 48 0 0 1 123 223 L123 290 A47 52 0 0 0 170 344 L170 350 L160 350 A58 49 0 0 1 102 301 L103 220 A45 40 0 0 0 58 180 L58 170 A45 40 0 0 0 103 130 L103 49 A58 49 0 0 1 161 0"), a, .4))
 
+COMMANDS.addBinaryCommand('dint', Integral)
 COMMANDS.addSymbol('int', () => {
     return Div('', [
         Span('int', '∫')
     ])
 })
+COMMANDS.addBinaryCommand('at', At)
 
+COMMANDS.addUnaryCommand('box', Box)
 COMMANDS.addUnaryCommand('sqrt', Sqrt)
 COMMANDS.addUnaryCommand('hat', WideHat)
+COMMANDS.addUnaryCommand('vec', Vec)
+COMMANDS.addUnaryCommand('bar', Bar)
 
 COMMANDS.addBinaryCommand('frac', Fraction)
+COMMANDS.addBinaryCommand('supsub', SupSub)
+COMMANDS.addBinaryCommand('bsupsub', (a, b) => SupSub(a, b, true))

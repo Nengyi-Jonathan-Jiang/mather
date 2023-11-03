@@ -10,10 +10,12 @@
 }
 
 .math .group-symbol.prefix {
-    /*margin-right: -0.08em;*/
+    margin-left: 0.1em;
+    margin-right: 0.05em;
 }
 
 .math .group-symbol.suffix {
     transform: scaleX(-1);
-    /*margin-left: -0.1em;*/
+    margin-right: 0.1em;
+    margin-left: 0.05em;
 }

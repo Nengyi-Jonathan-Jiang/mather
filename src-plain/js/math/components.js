@@ -41,7 +41,7 @@ const SVG = (viewBox, className, path, fill=true) => {
     else {
         svg.setAttributeNS(null, 'fill', 'none')
         svg.setAttributeNS(null, 'stroke', 'black');
-        svg.setAttributeNS(null, 'strokeWidth', '1');
+        svg.setAttributeNS(null, 'stroke-width', '1');
     }
 
     svg.setAttributeNS(null, 'viewBox', viewBox);
@@ -62,6 +62,35 @@ const NumberEl = value => Span("number textual value", '', value.split('').map(d
 
 function Fraction(numerator, denominator) {
     return Span("fraction value", '', [Span('numerator expr', '', numerator), Span('denominator expr', '', denominator), Span('', '\u200b')]);
+}
+
+function SupSub(bottom, top, before=false) {
+    return Span(`supsub value${before?' before':''}`, '', [
+        Span('supsub-top expr', '', [
+            Span('supsub-inner expr', '', top)
+        ]),
+        Span('supsub-bottom expr', '', [
+            Span('supsub-inner expr', '', bottom)
+        ]),
+        Span('', '\u200b')
+    ]);
+}
+
+function Integral(top, bottom) {
+    return Span(
+        'int at expr value', '', [
+            Div('', [Span('int at', '∫')]),
+            SupSub(top, bottom)
+        ]
+    );
+}
+function At(top, bottom) {
+    return Span(
+        'at expr value', '', [
+            Div('', [Span('at', '|')]),
+            SupSub(top, bottom)
+        ]
+    );
 }
 
 function Grouping(svg, children, width = .55) {
@@ -85,6 +114,11 @@ function Sqrt(children) {
     return Div('sqrt value', [root, inner]);
 }
 
+function Box(children) {
+    return Div('box value', children);
+}
+
+
 function WideHat(children) {
     const hat = Span('hat above-line', '', [SVG(
         '0 0 6 5', '',
@@ -93,4 +127,22 @@ function WideHat(children) {
     const inner = Span('hat above-content expr', '', children);
 
     return Div('hat above value', [hat, inner]);
+}
+function Bar(children) {
+    const line = Span('bar above-line', '', [SVG(
+        '0 0 6 5', '',
+        'M0 2 L6 2 6 3 0 3'
+    )]);
+    const inner = Span('bar above-content expr', '', children);
+
+    return Div('hat above value', [line, inner]);
+}
+function Vec(children) {
+    const arrow = Span('vec above-line', '', [SVG(
+        '0 0 6 5', '',
+        'M0 2.25 L5 2.25 4.5 0 6 2.5 4.5 5 5 2.75 0 2.75'
+    )]);
+    const inner = Span('vec above-content expr', '', children);
+
+    return Div('vec above value', [arrow, inner]);
 }
