@@ -143,7 +143,6 @@ COMMANDS.addOperator('and', '∧');
 COMMANDS.addOperator('or', '∨');
 COMMANDS.addLetter('not', '¬', false);
 COMMANDS.addOperator('xor', '⊕');
-COMMANDS.addOperator('define', '≔')
 COMMANDS.addLetter('intersection', '⋂', false);
 COMMANDS.addLetter('union', '⋃', false);
 
@@ -196,6 +195,8 @@ COMMANDS.addOperator('bimplies', '⇔');
 COMMANDS.addOperator('therefore', '∴');
 COMMANDS.addOperator('', '⇒');
 COMMANDS.addOperator('st', 's.t.');
+COMMANDS.addOperator('define', '≔')
+COMMANDS.addOperator('equiv', '≡')
 
 COMMANDS.addOperator('lt', '<');
 COMMANDS.addOperator('gt', '>')

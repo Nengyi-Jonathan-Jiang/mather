@@ -9,6 +9,7 @@ class MathParser {
         ['\\jhat', '\\hat\\j'],
         ['\\khat', '\\hat\\k'],
         ['\\rhat', '\\hat\\b\\r'],
+        ['===', '\\equiv '],
         [':=', '\\define '],
         ['::', '\\analogous '],
         [':', '\\ratio '],
