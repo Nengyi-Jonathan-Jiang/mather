@@ -6,6 +6,7 @@ class MathParser {
         ['\\*', '\\conj '],
         ['\\+', '\\sup{\\dagger}'],
         [',', '\\comma '],
+        [';', '\\semicolon '],
         ['\'', '\\prime'],
         ['\\ihat', '\\hat\\i '],
         ['\\jhat', '\\hat\\j '],
@@ -26,6 +27,9 @@ class MathParser {
         ['-', '\\minus '],
         ['*', '\\times '],
         ['/', '\\divide '],
+        ['->', '\\to '],
+        ['>>', '\\mgt '],
+        ['<<', '\\mlt '],
         ['>=', '\\ge '],
         ['<=', '\\le '],
         ['>', '\\gt '],
@@ -129,8 +133,9 @@ class MathParser {
         }
 
         log('Unknown:' + it.next);
+        let res = TextEl(it.next)
         it.advance();
-        return null
+        return res;
     }
     static #parseMany(it) {
         while(!it.done && it.next === ' ') it.advance();

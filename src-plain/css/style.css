@@ -19,7 +19,11 @@ body {
     border: 1px solid black;
     margin: 5px;
     padding: 5px;
-    height: fit-content;
+    font-size: x-large;
+
+    width: 8.5in;
+    height: 11in;
+    overflow-y: auto;
 }
 
 * {
@@ -27,7 +31,7 @@ body {
 }
 
 textarea {
-    width: 100%;
+    flex-grow: 1;
     height: 100%;
     resize: none;
     outline: none;
@@ -55,7 +59,8 @@ textarea {
 
 .math span.text {
     font-family: 'Times New Roman', serif;
-    white-space: pre;
+    white-space: normal;
+    display: inline;
 }
 
 .math span.number {}

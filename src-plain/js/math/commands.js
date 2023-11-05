@@ -170,6 +170,7 @@ COMMANDS.addLetter('quaternions', 'ℍ', false);
 
 COMMANDS.addSymbol('comma', () => Span('separator', ','));
 COMMANDS.addSymbol('colon', () => Span('separator', ':'));
+COMMANDS.addSymbol('semicolon', () => Span('separator', ';'));
 
 COMMANDS.addLetter('fact', '!', false);
 
@@ -201,8 +202,10 @@ COMMANDS.addOperator('st', 's.t.');
 COMMANDS.addOperator('define', '≔')
 COMMANDS.addOperator('equiv', '≡')
 
-COMMANDS.addOperator('lt', '<');
+COMMANDS.addOperator('lt', '<')
 COMMANDS.addOperator('gt', '>')
+COMMANDS.addOperator('mgt', '≫')
+COMMANDS.addOperator('mlt', '≪')
 COMMANDS.addOperator('eq', '=')
 COMMANDS.addOperator('le', '≤')
 COMMANDS.addOperator('ge', '≥')

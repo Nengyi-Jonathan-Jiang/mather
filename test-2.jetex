@@ -8,8 +8,11 @@
 =\box{\pi}
 "
 "
-"Sulfur (S) and sulfur dioxide (SO"_2") can react with Ozone
-"to form sulfuric acid (H"_2\SO_4") in the following reactions:
+"Sulfur (S) and sulfur dioxide (SO"_2") can react with Ozone to form sulfuric acid (H"_2\SO_4") in the following reactions:
 "
 \indent\S_"(s)" + \H_2\O_"(l)" + \O_3_"(g)" \to \H_2\S\O_4_"(aq)"
 \indent3\SO_2_"(g)" + 3\H_2\O_"(l)" + \O_3_"(g)"\to 3\H_2\S\O_4_"(aq)"
+"
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
+"The Riemann zeta function can also be written as "\zeta(z)=\frac1{\Gamma(z)}\int_^0\inf \frac {t^{z-1}}{e^t-1}dt ", where the Gamma function "\Gamma(z)={\int_^0\inf e^{-t}t^{z-1}dt}." Like the sumnation form of the zeta function, this formula only works if "\re(z)>1". However, we can extend the function to all "z!=1" using analytic continuation.
