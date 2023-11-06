@@ -9,12 +9,6 @@
     line-height: 1;
 }
 
-.math span.text.value:empty {
-    display: block;
-    height: 1em;
-}
-
-
 .math * {
     display: inline-block;
     box-sizing: border-box;
@@ -30,6 +24,7 @@
 
 .math var {
     margin-right: .05em;
+    /*font-style: normal;*/
 }
 
 .math .sub + var {
@@ -75,7 +70,7 @@
 }
 
 .math span.indent {
-    width: 1.5em;
+    margin-left: 1.5em;
 }
 
 .math .box {

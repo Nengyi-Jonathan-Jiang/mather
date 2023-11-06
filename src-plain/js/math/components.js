@@ -31,14 +31,13 @@ function Span(className, innerText = '', children = [], style = '') {
 
 /** @returns {HTMLDivElement} */
 const Div = (className, children = [], style = '') => Element('div', className, '', children, style);
-const SVG = (viewBox, className, path, fill=true) => {
+const SVG = (viewBox, className, path, fill = true) => {
     const svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
     svg.setAttributeNS(null, 'preserveAspectRatio', 'none');
-    if(fill){
+    if (fill) {
         svg.setAttributeNS(null, 'fill', 'black')
         svg.setAttributeNS(null, 'stroke', 'none');
-    }
-    else {
+    } else {
         svg.setAttributeNS(null, 'fill', 'none')
         svg.setAttributeNS(null, 'stroke', 'black');
         svg.setAttributeNS(null, 'stroke-width', '1');
@@ -64,14 +63,14 @@ function Fraction(numerator, denominator) {
     return Span("fraction value", '', [Span('numerator expr', '', numerator), Span('denominator expr', '', denominator), Span('', '\u200b')]);
 }
 
-function SupSub(bottom, top, before=false) {
-    return Span(`supsub value${before?' before':''}`, '', [
-        Span('supsub-top expr', '', [
+function SupSub(bottom, top, before = false) {
+    return Span(`supsub value${before ? ' before' : ''}`, '', [
+        top ? Span('supsub-top expr', '', [
             Span('supsub-inner expr', '', top)
-        ]),
-        Span('supsub-bottom expr', '', [
+        ]) : null,
+        bottom ? Span('supsub-bottom expr', '', [
             Span('supsub-inner expr', '', bottom)
-        ]),
+        ]) : null,
         Span('', '\u200b')
     ]);
 }
@@ -84,6 +83,7 @@ function Integral(top, bottom) {
         ]
     );
 }
+
 function At(top, bottom) {
     return Span(
         'at expr value', '', [
@@ -94,7 +94,6 @@ function At(top, bottom) {
 }
 
 function Grouping(svg, children, width = .55) {
-    console.log(svg, children, width);
     const prefix = Span('group-symbol prefix', '', [svg()]);
     const content = Span('group-content expr', '', children);
     const suffix = Span('group-symbol suffix', '', [svg()]);
@@ -128,6 +127,7 @@ function WideHat(children) {
 
     return Div('hat above value', [hat, inner]);
 }
+
 function Bar(children) {
     const line = Span('bar above-line', '', [SVG(
         '0 0 6 5', '',
@@ -137,6 +137,7 @@ function Bar(children) {
 
     return Div('hat above value', [line, inner]);
 }
+
 function Vec(children) {
     const arrow = Span('vec above-line', '', [SVG(
         '0 0 6 5', '',
