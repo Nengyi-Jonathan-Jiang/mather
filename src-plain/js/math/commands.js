@@ -107,6 +107,7 @@ COMMANDS.addSymbol('break', () => Span('break'));
 COMMANDS.addUnaryCommand('math', a => Div('', a));
 
 COMMANDS.addUnaryCommand('indent', a => Element('span', 'indent', '', a));
+COMMANDS.addUnaryCommand('par', a => Element('span', 'par', '', a));
 
 {
     const letters = [
@@ -262,13 +263,12 @@ COMMANDS.addUnaryCommand('angle', a => Grouping(() => SVG("0 0 8 24", '', "M8 0 
 COMMANDS.addUnaryCommand('paren', a => Grouping(() => SVG("28 0 56 187", '', "M85 0 A61 101 0 0 0 85 186 L75 186 A75 101 0 0 1 75 0"), a, .3))
 COMMANDS.addUnaryCommand('set', a => Grouping(() => SVG("60 0 115 350", '', "M170 0 L170 6 A47 52 0 0 0 123 60 L123 127 A35 48 0 0 1 88 175 A35 48 0 0 1 123 223 L123 290 A47 52 0 0 0 170 344 L170 350 L160 350 A58 49 0 0 1 102 301 L103 220 A45 40 0 0 0 58 180 L58 170 A45 40 0 0 0 103 130 L103 49 A58 49 0 0 1 161 0"), a, .4))
 
-COMMANDS.addBinaryCommand('dint', Integral)
 COMMANDS.addSymbol('int', () => {
-    return Div('', [
-        Span('int', '∫')
-    ])
+    return Span('int at', '∫');
 })
-COMMANDS.addBinaryCommand('at', At)
+COMMANDS.addSymbol('at', () => {
+    return Span('at', '|');
+})
 
 COMMANDS.addUnaryCommand('box', Box)
 COMMANDS.addUnaryCommand('sqrt', Sqrt)

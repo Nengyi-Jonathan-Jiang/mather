@@ -75,24 +75,6 @@ function SupSub(bottom, top, before = false) {
     ]);
 }
 
-function Integral(top, bottom) {
-    return Span(
-        'int at expr value', '', [
-            Div('', [Span('int at', '∫')]),
-            SupSub(top, bottom)
-        ]
-    );
-}
-
-function At(top, bottom) {
-    return Span(
-        'at expr value', '', [
-            Div('', [Span('at', '|')]),
-            SupSub(top, bottom)
-        ]
-    );
-}
-
 function Grouping(svg, children, width = .55) {
     const prefix = Span('group-symbol prefix', '', [svg()]);
     const content = Span('group-content expr', '', children);

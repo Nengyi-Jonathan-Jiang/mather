@@ -1,0 +1,52 @@
+
+.math span.text {
+    font-family: 'Times New Roman', serif;
+    white-space: normal;
+    display: inline;
+}
+
+.bold {
+    font-weight: bold;
+}
+.bold, .bold * {
+    font-style: normal;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.math span.break {
+    display: block;
+    height: 10px;
+}
+
+.math span.heading-1, 
+.math span.heading-2, 
+.math span.heading-3{
+    display: block;
+    font-weight: bold;
+}
+
+.math span.heading-1 {
+    font-size: 150%;
+    margin: .2em 0;
+}
+.math span.heading-2 {
+    font-size: 125%;
+    margin: .2em 0;
+}
+.math span.heading-1 {
+    margin: .2em 0;
+}
+
+
+.math span.indent {
+    margin-left: 1.5em;
+    display: block;
+}
+
+.math .box {
+    border: 1px solid black;
+    padding: .25em;
+}

@@ -68,12 +68,3 @@
     font-size: 50%;
     vertical-align: .55em;
 }
-
-.math span.indent {
-    margin-left: 1.5em;
-}
-
-.math .box {
-    border: 1px solid black;
-    padding: .25em;
-}

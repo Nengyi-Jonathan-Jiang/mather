@@ -20,17 +20,17 @@
     text-align: right;
 }
 
-.math .at>span.supsub>span.supsub-top>span.supsub-inner {
+.math .at + span.supsub>span.supsub-top>span.supsub-inner {
     vertical-align: 1em;
 }
-.math .at>span.supsub>span.supsub-bottom>span.supsub-inner {
+.math .at + span.supsub>span.supsub-bottom>span.supsub-inner {
     vertical-align: -1em;
 }
 
-.math .int>span.supsub>span.supsub-top>span.supsub-inner {
+.math .int + span.supsub>span.supsub-top>span.supsub-inner {
     margin-left: -0.1em;
 }
-.math .int>span.supsub>span.supsub-bottom>span.supsub-inner {
+.math .int + span.supsub>span.supsub-bottom>span.supsub-inner {
     margin-left: -0.5em;
 }
 

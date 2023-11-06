@@ -4,14 +4,6 @@
     src: url("../fonts/Symbola.woff") format("woff");
 }
 
-#math-output, textarea {
-    color: white;
-    background: black !important;
-}
-svg {
-    filter: invert();
-}
-
 body {
     margin: 0;
     padding: 0;
@@ -26,8 +18,8 @@ body {
 #math-output, textarea {
     display: block;
     height: 100%;
-    border: 10px solid black;
-    outline: 1px solid white;
+    border: 10px solid white;
+    outline: 1px solid black;
     outline-offset: -5px;
     padding: 0;
 }
@@ -54,12 +46,6 @@ textarea {
 
     font-family: 'JetBrains Mono', monospace;
     font-size: 9pt;
-}
-
-.math span.text {
-    font-family: 'Times New Roman', serif;
-    white-space: normal;
-    display: inline;
 }
 
 .math span.number {}
@@ -97,20 +83,4 @@ textarea {
     vertical-align: -0.15em;
     transform: scaleX(.7);
     font-size: 200%;
-}
-
-.bold {
-    font-weight: bold;
-}
-.bold, .bold * {
-    font-style: normal;
-}
-
-.italic {
-    font-style: italic;
-}
-
-.math span.break {
-    display: block;
-    height: 5px;
 }

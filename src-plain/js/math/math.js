@@ -28,7 +28,6 @@ class StringIterator {
         // Try to replace
         for (const [regex, replacement] of this.#replacers) {
             if(this.#str.match(regex)) {
-                console.log(regex);
                 this.#str = this.#str.replace(regex, replacement);
                 break;
             }
@@ -56,7 +55,6 @@ class StringIterator {
 
 class MathParser {
     static #math_replacements = [
-        [/\s(\s+)/, '"{ }'],
         ['\\*', '\\conj '],
         ['\\+', '\\sup{\\dagger}'],
         [',', '\\comma '],
@@ -66,10 +64,9 @@ class MathParser {
         ['\\jhat', '\\hat\\j '],
         ['\\khat', '\\hat\\k '],
         ['\\rhat', '\\hat\\b\\r '],
-        ['|_^', '\\at '],
+        ['|_^', '\\at\\supsub '],
         ['->', '\\to '],
         ['=>', '\\implies '],
-        ['\\int_^', '\\dint '],
         ['===', '\\equiv '],
         [':=', '\\define '],
         ['::', '\\analogous '],
@@ -94,18 +91,17 @@ class MathParser {
         [/[\])]/g, '}'],
     ];
     static #normal_replacements = [
-        // ['\n', ' '],
         ['\\\\', '\\break '],
         ['\\h1', '\\heading '],
         ['\\h2', '\\hheading '],
         ['\\h3', '\\hhheading '],
-        ['${', '\\math{'],
-        ['"{', '\\text{'],
+        // ['${', '\\math{'],
+        // ['"{', '\\text{'],
         ['_^<', '\\bsupsub '],
         ['_^', '\\supsub '],
         ['^', '\\sup '],
         ['_', '\\sub '],
-    ]
+    ];
     
     static parse(code='') {
         return new MathParser().#parse(code);
@@ -130,25 +126,30 @@ class MathParser {
     #parse(code) {
         this.#it = new StringIterator(code);
         this.#setMathMode(false);
-        return this.#parseText();
+        return this.#parseMultipleElements();
     }
-
-    #parseText() {
-        /** @type {HTMLElement[]} */
-        let parts = [];
-        let str = ''
-        while (!this.#it.done && this.#it.next !== '}') {
-            if (this.#it.next === '\\') {
-                parts.push(TextEl(str));
-                parts.push(this.#parseCommand(this.#it));
-                str = '';
-            } else {
-                str += this.#it.next;
-                this.#it.advance();
+    
+    #parseMultipleElements() {
+        let spaces = 0;
+        while (!this.#it.done) {
+            if(this.#it.next === ' ') spaces++;
+            else if(this.#it.next === '$' || this.#it.next === '"') {
+                this.#setMathMode(!this.#mathmode);
             }
+            else break;
+            this.#it.advance();
         }
-        parts.push(TextEl(str));
-        return parts;
+
+        if (this.#it.done || this.#it.next === '}') return [];
+
+        let el = this.#parseSingle();
+
+        
+        if (!this.#mathmode) {
+            el = [TextEl(' '), el]
+        }
+
+        return [el, this.#parseMultipleElements()];
     }
 
     #parseSingle() {
@@ -162,7 +163,7 @@ class MathParser {
         // If block to parse
         if (this.#it.next === '{') {
             this.#it.advance();
-            let elements = this.#parseMany(this.#it);
+            let elements = this.#parseMultipleElements(this.#it);
             this.#it.advance(); // Skip over the closing brace
             return elements
         }
@@ -173,7 +174,7 @@ class MathParser {
         }
 
         let s = '';
-        while (!this.#it.done && !this.#it.next.match(/\s/)) {
+        while (!this.#it.done && !this.#it.next.match(/[\s\$"]/)) {
             s += this.#it.next;
             this.#it.advance();
         }
@@ -188,8 +189,8 @@ class MathParser {
         // If block to parse
         if (this.#it.next === '{') {
             this.#it.advance();
-            let elements = this.#parseMany(this.#it);
-            this.#it.advance(); // Skip over the closing brace
+            let elements = this.#parseMultipleElements(this.#it);
+            if(this.#it.next === '}') this.#it.advance(); // Skip over the closing brace
             return elements
         }
         // If number to parse
@@ -230,22 +231,6 @@ class MathParser {
             this.#it.advance();
         }
 
-        if(s === 'math') {
-            // Enter math mode
-            let wasMathMode = this.#mathmode;
-            this.#setMathMode(true);
-            let res = this.#parseSingle();
-            this.#setMathMode(wasMathMode);
-            return res;
-        }
-        if(s === 'text') {
-            let wasMathMode = this.#mathmode;
-            this.#setMathMode(false);
-            let res = this.#parseSingle();
-            this.#setMathMode(wasMathMode);
-            return res;
-        }
-
         if (this.#hasSymbol(s)) {
             return this.#createSymbol(s);
         } else if (this.#hasUnaryCommand(s)) {
@@ -275,15 +260,5 @@ class MathParser {
     }
     #applyBinaryCommand(s, a, b) {
         return this.#mathmode && MATH_COMMANDS.hasBinaryCommand(s) && MATH_COMMANDS.applyBinaryCommand(s, a, b) || COMMANDS.applyBinaryCommand(s, a, b);
-    }
-
-    #parseMany() {
-        while (!this.#it.done && this.#it.next === ' ') this.#it.advance();
-
-        if (this.#it.done || this.#it.next === '}') return [];
-
-        let el = this.#mathmode ? [this.#parseSingle()] : this.#parseText();
-
-        return [...el, ...this.#parseMany()];
     }
 }
